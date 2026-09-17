@@ -56,11 +56,22 @@ function buscarIncidencia(req, res) {
     // si encuentra la incidencia, devuelve la incidencia 
     res.json(incidencia);
 }
+//eliminar incidencia
+function eliminarIncidencia(req, res) {
+    const id = Number(req.params.id);
+    const index = incidencias.findIndex(incidencia => incidencia.id === id);
+    if (index === -1) {
+        return res.status(404).json({ mensaje: 'incidencia no encontrada' });
+    }
+    incidencias.splice(index, 1);
+    res.json({ mensaje: 'incidencia eliminada correctamente' });
+}
 
 //listar incidencias
 //se exporta la funcion para routes/incidencias.js la pueda usar
 module.exports = {
     registrarIncidencia,
     listarIncidencias,
-    buscarIncidencia
+    buscarIncidencia,
+    eliminarIncidencia
 };

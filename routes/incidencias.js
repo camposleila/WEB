@@ -13,5 +13,8 @@ router.get('/incidencias',incidenciasController.listarIncidencias);
 // se ejecuta la funcion buscarIncidencia del controlador
 router.get('/incidencias/:id', incidenciasController.buscarIncidencia);
 
+// eliminar incidencia
+router.delete('/incidencias/:id', incidenciasController.eliminarIncidencia);
+
 //se hace lo mismo se exporta para para que app.js lo pueda usar
 module.exports = router;
