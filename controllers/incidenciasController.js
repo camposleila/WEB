@@ -67,11 +67,24 @@ function eliminarIncidencia(req, res) {
     res.json({ mensaje: 'incidencia eliminada correctamente' });
 }
 
-//listar incidencias
+// estadisticas de las incidencias guardadas
+function obtenerEstadisticas(req, res) {
+    const normalizarEstado = (estado) => (estado || '').toLowerCase().replace(/\s+/g, '');
+
+    res.json({
+        totalIncidencias: incidencias.length,
+        pendientes: incidencias.filter(incidencia => normalizarEstado(incidencia.estado) === 'pendiente').length,
+        enProceso: incidencias.filter(incidencia => normalizarEstado(incidencia.estado) === 'enproceso').length,
+        resueltas: incidencias.filter(incidencia => normalizarEstado(incidencia.estado) === 'resuelta').length,
+        canceladas: incidencias.filter(incidencia => normalizarEstado(incidencia.estado) === 'cancelada').length
+    });
+}
+
 //se exporta la funcion para routes/incidencias.js la pueda usar
 module.exports = {
     registrarIncidencia,
     listarIncidencias,
     buscarIncidencia,
-    eliminarIncidencia
+    eliminarIncidencia,
+    obtenerEstadisticas
 };
